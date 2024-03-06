@@ -9,4 +9,10 @@ http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/sc
 		<http:listener-connection host="${httpListener.host}" port="${httpListener.port}" readTimeout="${httpListener.readTimeout}"/>
 	</http:listener-config>
 	<configuration-properties doc:name="Configuration properties" doc:id="4aad7bd0-9e65-4e8f-a27a-d9ec061dbb0f" file="httpCofiguration/${env}-http-config.yaml" />
+	<http:request-config name="HTTPS_Publicapis.org_Configurations" doc:name="HTTP Request configuration" doc:id="6ad0b660-3e0b-4f71-bb21-75766007da17">
+		<http:request-connection protocol="HTTPS" host="api.publicapis.org" />
+	</http:request-config>
+	<http:request-config name="HTTPS_Agify_configuration" doc:name="HTTP Request configuration" doc:id="10162982-6113-4602-abe3-ec275b2e41d3" >
+		<http:request-connection protocol="HTTPS" host="api.agify.io" />
+	</http:request-config>
 </mule>

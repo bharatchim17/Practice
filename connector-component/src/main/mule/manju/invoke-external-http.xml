@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="invoke-external-httpFlow" doc:id="49295a31-27b1-4475-b762-6e2f6e18c61c" >
+		<http:listener doc:name="Listener" doc:id="948e692b-1567-4a63-a9b2-7bb7c9b3154d" config-ref="HTTP_Listener_config" path="/invokepublicapiorg"/>
+		<http:request method="GET" doc:name="invoke publicapis.org" doc:id="a3fdd7b6-1b53-48a7-9733-ee8c04365d79" config-ref="HTTPS_Publicapis.org_Configurations" path="/entries"/>
+		<ee:transform doc:name="Transform Message" doc:id="82b0d242-d4a4-49df-8961-23d82fd1109e" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="invoke-agify-api" doc:id="ee426107-3acc-4b5c-a43a-36a40d146349" >
+		<http:listener doc:name="Listener" doc:id="86521770-15cc-44e0-8f41-131ce383de60" config-ref="HTTP_Listener_config" path="/invokeagify" />
+		<set-variable value="#[attributes.queryParams.name]" doc:name="Extract Query  Parameters" doc:id="ae56c0cf-80ac-46a3-87e7-52f46a981477" variableName="extractName"/>
+		<http:request method="GET" doc:name="Invoke Agiify" doc:id="980d7978-9099-4894-b0e2-7954aedfa8d4" config-ref="HTTPS_Agify_configuration" path="?">
+			<http:query-params ><![CDATA[#[output application/json
+---
+{
+	"savedInVariable" : vars.extractName
+}]]]></http:query-params>
+		</http:request>
+		<ee:transform doc:name="Transform Message" doc:id="9f235232-941f-429c-838d-cd5961c05fdb" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
