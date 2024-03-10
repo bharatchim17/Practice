@@ -25,6 +25,7 @@
             
         
 </scatter-gather>
+        <logger doc:name="logg payload" doc:id="gfkmji" message="#[payload]"/>
         <ee:transform doc:name="Transform" doc:id="uicgfd" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
