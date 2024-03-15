@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="RoundRobin" doc:id="2cbd90d0-c0ce-4f4b-99a6-032cf0851ba7" >
+		<http:listener doc:name="Listener" doc:id="5743dc4a-6319-4c7a-b711-e8bca6e50183" config-ref="HTTP_Listener_config" path="/invokeroundrobin"/>
+		<logger level="INFO" doc:name="Started RR" doc:id="6856e54c-9d7f-47de-9a43-c30e9c8efe5f" message="Started RR" />
+		<round-robin doc:name="Round Robin" doc:id="c7eaa5c1-4f52-4112-8496-4af66e54433f" />
+		<logger level="INFO" doc:name="Ended RR" doc:id="fa1fe5aa-ebb9-40a4-9a82-11b05079e172" message="Ended RR" />
+	</flow>
+	<flow name="FirstSuccessful" doc:id="417c2964-7c19-417c-8c7c-82ed05ff7392" >
+		<http:listener doc:name="Listener" doc:id="79ea8cac-4d97-44ae-aa13-f446d865633b" config-ref="HTTP_Listener_config" path="/invokefirstsuccess"/>
+		<logger level="INFO" doc:name="Started FS" doc:id="77ca0cf4-1c58-4fd0-8ee9-529777d453f9" message="Started FS" />
+		<first-successful doc:name="First Successful" doc:id="09c501ec-d78c-43f0-9b69-d28d6faa1d78" />
+		<logger level="INFO" doc:name="Ended FS" doc:id="18f5ac5e-85ac-4f29-b8d8-e709ca111278" message="Ended FS" />
+	</flow>
+</mule>
